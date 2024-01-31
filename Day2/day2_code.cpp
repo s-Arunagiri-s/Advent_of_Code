@@ -15,11 +15,11 @@ int main(){
     cin>>red;
     cout<<"enter number of green cubes:";
     cin>>green;
-    file.open("day2.txt",ios::in);
+    file.open("day1.txt",ios::in);
     if(file.is_open())
     {
         string tp;
-        int game;
+        int game=0;
         string s;
         int bp;
         int rp;
@@ -33,13 +33,20 @@ int main(){
         while(getline(file,tp)){
             for(int i=0;i<tp.length();i++)
             {
-                if(tp[i]<='9' && tp[i]>='0')
+                if(tp[i]==':')
                 {
-                    game=int(tp[i]-'0');
                     break;
                 }
+                if(tp[i]<='9' && tp[i]>='0')
+                {
+                    game+=int(tp[i]-'0');
+                    game=game*10;
+                    
+                }
             }
-            s=tp.substr(8,tp.size()-8);
+            game=game/10;
+            size_t pos=tp.find(':');
+            s=tp.substr(pos+1,tp.size()-pos);
             //cout<<s<<"\n";
             stringstream sss(s);
             while(getline(sss,ss,';'))
@@ -76,6 +83,7 @@ int main(){
           sum+=game;
           }
           flag=0;
+          game=0;
         }
         cout<<sum;
     }
