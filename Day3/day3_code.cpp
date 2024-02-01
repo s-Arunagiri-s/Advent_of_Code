@@ -5,20 +5,21 @@ int numgen(int i,int j,string &text)
 {
 
     int num=0;
-    while(text[j]!='.' && j>=0)
+    while(isdigit(text[j])==1 && j>=0)
     {
         j--;
     }
 
     j++;
 
-    while(isdigit(text[j])&& j<=text.size())
+    while(isdigit(text[j]) && j<=text.size())
     {
         num+=int(text[j]-'0');
         num=num*10;
         text[j]='.';
         j++;
     }
+    cout<<num/10<<" ";
     return num/10;
 }
 
@@ -27,8 +28,8 @@ int main()
     fstream file;
     vector<string> text;
     string tp;
-    int sum=0;
-    file.open("day3.txt",ios::in);
+    long int sum=0;
+    file.open("day1.txt",ios::in);
     if(file.is_open())
     {
       while(getline(file,tp))
@@ -93,4 +94,3 @@ int main()
     cout<<"sum: "<<sum<<"\n";
 
 }
-
