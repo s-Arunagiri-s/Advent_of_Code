@@ -1,0 +1,110 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    fstream file;
+    int sum=0;
+    string tp;
+    int points=0;
+    int match=0;
+    int a=1;
+    int finalans=0;
+    int card_num=0;
+    unordered_map<int,int> cards;
+    //cards[1]=1;
+    int total_cards=0;
+    file.open("day4.txt",ios::in);
+    if(file.is_open())
+    {
+        
+        while(getline(file,tp)){
+            //card_number
+            total_cards++;
+            int d_pos=tp.find('d');
+            while(isdigit(tp[d_pos])==0)
+            {
+                d_pos++;
+            }
+            
+            card_num=0;
+            while(tp[d_pos]!=':'){
+                card_num+=int(tp[d_pos]-'0');
+                card_num=card_num*10;
+                d_pos++;
+            }
+            card_num=card_num/10;
+            
+            if(cards[card_num]==0)
+            cards[card_num]=1;
+            else
+            cards[card_num]++;
+            
+            //matches finder
+            unordered_set<int> win;
+            unordered_set<int> have;
+            int start=tp.find(':');
+            for(int i=start+2;tp[i]!='|';i++)
+            {
+                if(isdigit(tp[i]))
+                   {
+                       sum=sum*10;
+                       sum+=int(tp[i]-'0');
+                   }
+                if(tp[i]==' ' && tp[i-1]!=' ')
+                    {
+                        win.insert(sum);
+                        sum=0;
+                    }
+            }
+
+            int sec=tp.find('|');
+            for(int i=sec+2;i<=tp.size();i++)
+            {
+                if(isdigit(tp[i]))
+                   {
+                       sum=sum*10;
+                       sum+=int(tp[i]-'0');
+                   }
+                if(tp[i]==' ')
+                    {
+                        have.insert(sum);
+                        sum=0;
+                    }
+            }
+            have.insert(sum);
+            sum=0;
+
+            unordered_set<int>::iterator itr;
+
+            points=0;
+            for (itr = have.begin(); itr != have.end();itr++)
+            {
+                 if (win.find(*itr) != win.end())
+                 {
+                     points++;
+                 }
+
+            }
+            cout<<"\ncard_num "<<card_num<<"points "<<points;
+            //card duplicator
+            int temp=cards[card_num];
+            int tempcard=card_num;
+            while(temp>0)
+            {
+            for(int i=0;i<points;i++)
+            {
+                cards[++tempcard]++;
+            }
+            temp--;
+            tempcard=card_num;
+            }
+            points=0;
+
+
+    }
+    for(int i=0;i<total_cards;i++)
+    {
+        cout<<"\ncard "<<i+1<<": "<<cards[i+1];
+        finalans+=cards[i+1];
+    }
+    cout<<"\npoints: "<<finalans;
+}}
