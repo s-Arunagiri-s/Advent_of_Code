@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int
+main ()
+{
+  fstream file;
+  long int Time = 0;
+  long int dist = 0;
+  string tp;
+  file.open ("day6.txt", ios::in);
+  if (file.is_open ())
+	{
+
+	  while (getline (file, tp))
+		{
+		  if (tp[0] == 'T')
+			{
+			  for (int i = 0; i < tp.size (); i++)
+				{
+				  if (isdigit (tp[i]) == 1)
+					{
+					  Time += int(tp[i]-'0');
+					  Time = Time * 10;
+					}
+				}
+
+			}
+		  else if (tp[0] == 'D')
+			{
+			  for (int i = 0; i < tp.size (); i++)
+				{
+				  if (isdigit (tp[i]) == 1)
+					{
+					  dist += int(tp[i]-'0');
+					  dist = dist * 10;
+					}
+				}
+			}
+		}
+	}
+	long int brek;
+	Time=Time/10;
+	dist=dist/10;
+	for(long int i=0;i<Time;i++)
+	{
+	    if(((Time-i)*i)>dist)
+	    {
+	        brek=i;
+	        break;
+	    }
+	}
+	cout<<Time-(2*brek)+1;
+
+
+
+
+}
